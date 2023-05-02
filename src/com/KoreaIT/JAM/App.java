@@ -62,41 +62,16 @@ public class App {
 				} else if (cmd.equals("article list")) {
 					System.out.println("== 게시물 리스트 ==");
 
-					ResultSet rs = null;
 
 					List<Article> articles = new ArrayList<>();
 					
+					SecSql sql = new SecSql();
 					
+					sql.append("SELECT *");
+					sql.append("FROM article");
+					sql.append("ORDER BY id DESC");
 					
-					
-					
-
-					try {
-						String sql = "SELECT *";
-						sql += " FROM article";
-						sql += " ORDER BY id DESC";
-
-						while (rs.next()) {
-							int id = rs.getInt("id");
-							String regDate = rs.getString("regDate");
-							String updateDate = rs.getString("updateDate");
-							String title = rs.getString("title");
-							String body = rs.getString("body");
-
-							Article article = new Article(id, regDate, updateDate, title, body);
-							articles.add(article);
-						}
-					} catch (SQLException e) {
-						System.out.println("에러: " + e);
-					} finally {
-						try {
-							if (rs != null && !rs.isClosed()) {
-								rs.close();
-							}
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-					}
+					DBUtil.selectRows(conn, sql);
 
 					if (articles.size() == 0) {
 						System.out.println("존재하는 게시물이 없습니다");
@@ -117,14 +92,24 @@ public class App {
 				} else if (cmd.startsWith("article modify ")) {
 					int id = Integer.parseInt(cmd.split(" ")[2]);
 					System.out.printf("== %d번 게시글 수정 ==\n", id);
-
+					
+					SecSql sql = SecSql.from("SELECT COUNT(*)");
+					sql.append("FROM article");
+					sql.append(" WHERE id = ?", id);
+					
+					int articleCount = DBUtil.selectRowIntValue(conn, sql);
+					
+					if(articleCount == 0) {
+						System.out.printf("%d번 게시글은 존재하지 않습니다.\n", articleCount); 
+						continue;
+					}
+					
 					System.out.printf("수정할 제목 : ");
 					String title = sc.nextLine();
 					System.out.printf("수정할 내용 : ");
 					String body = sc.nextLine();
 
-					SecSql sql = new SecSql();
-					sql.append("UPDATE article");
+					sql = SecSql.from("UPDATE article");
 					sql.append("SET updateDate = NOW()");
 					sql.append(", title = ?", title);
 					sql.append(", `body` = ?", body);
