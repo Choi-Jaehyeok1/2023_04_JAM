@@ -2,10 +2,10 @@ package com.KoreaIT.JAM;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import com.KoreaIT.JAM.util.DBUtil;
@@ -52,16 +52,9 @@ public class App {
 					int id = DBUtil.insert(conn, sql);
 					
 					System.out.printf("%d번 게시글이 생성되었습니다\n", id);
-
-					
-					
-					
-					
-					
 					
 				} else if (cmd.equals("article list")) {
 					System.out.println("== 게시물 리스트 ==");
-
 
 					List<Article> articles = new ArrayList<>();
 					
@@ -71,8 +64,11 @@ public class App {
 					sql.append("FROM article");
 					sql.append("ORDER BY id DESC");
 					
-					DBUtil.selectRows(conn, sql);
-
+					List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
+					
+					for(Map<String, Object> articleMap : articleListMap) {
+						articles.add(new Article(articleMap));
+					}
 					if (articles.size() == 0) {
 						System.out.println("존재하는 게시물이 없습니다");
 						continue;
@@ -83,11 +79,6 @@ public class App {
 					for (Article article : articles) {
 						System.out.printf("%d	|	%s\n", article.id, article.title);
 					}
-					
-					
-					
-					
-					
 					
 				} else if (cmd.startsWith("article modify ")) {
 					int id = Integer.parseInt(cmd.split(" ")[2]);
