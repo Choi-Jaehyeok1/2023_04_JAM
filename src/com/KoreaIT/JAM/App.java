@@ -40,9 +40,10 @@ public class App {
 					String LoginId = "";
 					String LoginPw = "";
 					String name = "";
+					
 					while (true) {
 						System.out.printf("LoginId : ");
-						LoginId = sc.nextLine();
+						LoginId = sc.nextLine().trim();
 
 						if (LoginId == "") {
 							continue;
@@ -52,9 +53,9 @@ public class App {
 
 					while (true) {
 						System.out.printf("LoginPw : ");
-						LoginPw = sc.nextLine();
+						LoginPw = sc.nextLine().trim();
 						System.out.printf("LoginPw2 : ");
-						String LoginPw2 = sc.nextLine();
+						String LoginPw2 = sc.nextLine().trim();
 
 						if (LoginPw.equals(LoginPw2)) {
 							break;
@@ -65,7 +66,7 @@ public class App {
 
 					while (true) {
 						System.out.printf("name : ");
-						name = sc.nextLine();
+						name = sc.nextLine().trim();
 
 						if (name == "") {
 							continue;
@@ -81,9 +82,9 @@ public class App {
 					sql.append(", LoginPw = ?", LoginPw);
 					sql.append(", `name` = ?", name);
 
-					int id = DBUtil.insert(conn, sql);
+					DBUtil.insert(conn, sql);
 
-					System.out.printf("%s님께서 회원가입하셨습니다.\n", LoginId);
+					System.out.printf("%s님 환영합니다.\n", name);
 
 				} else if (cmd.equals("article write")) {
 					System.out.println("== 게시물 작성 ==");

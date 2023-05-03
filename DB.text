@@ -35,3 +35,22 @@ SET regDate = NOW(),
 updateDate = NOW(),
 title = CONCAT('제목', RAND()),
 `body` = CONCAT('제목', RAND());
+
+SELECT * FROM `member`
+
+CREATE TABLE `member`(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    loginId VARCHAR(20) NOT NULL, //50으로 바꿔야 함 전부
+    loginPw VARCHAR(20) NOT NULL,
+    `name` VARCHAR(20) NOT NULL
+);
+
+DESC `member`;
+
+ALTER TABLE `member` MODIFY COLUMN loginId VARCHAR(20) NOT NULL UNIQUE;
+
+
+
+
