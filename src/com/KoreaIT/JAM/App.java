@@ -34,7 +34,58 @@ public class App {
 					break;
 				}
 
-				if (cmd.equals("article write")) {
+				if (cmd.equals("member join")) {
+
+					System.out.println("== 게시물 작성 ==");
+					String LoginId = "";
+					String LoginPw = "";
+					String name = "";
+					while (true) {
+						System.out.printf("LoginId : ");
+						LoginId = sc.nextLine();
+
+						if (LoginId == "") {
+							continue;
+						}
+						break;
+					}
+
+					while (true) {
+						System.out.printf("LoginPw : ");
+						LoginPw = sc.nextLine();
+						System.out.printf("LoginPw2 : ");
+						String LoginPw2 = sc.nextLine();
+
+						if (LoginPw.equals(LoginPw2)) {
+							break;
+						}
+						System.out.println("비밀번호를 확인해주시기 바랍니다.");
+						continue;
+					}
+
+					while (true) {
+						System.out.printf("name : ");
+						name = sc.nextLine();
+
+						if (name == "") {
+							continue;
+						}
+						break;
+					}
+
+					SecSql sql = new SecSql();
+					sql.append("INSERT INTO member");
+					sql.append("SET regDate = NOW()");
+					sql.append(", updateDate = NOW()");
+					sql.append(", LoginId = ?", LoginId);
+					sql.append(", LoginPw = ?", LoginPw);
+					sql.append(", `name` = ?", name);
+
+					int id = DBUtil.insert(conn, sql);
+
+					System.out.printf("%s님께서 회원가입하셨습니다.\n", LoginId);
+
+				} else if (cmd.equals("article write")) {
 					System.out.println("== 게시물 작성 ==");
 
 					System.out.printf("제목 : ");
@@ -156,6 +207,8 @@ public class App {
 					DBUtil.delete(conn, sql);
 
 					System.out.printf("%d번 게시글이 삭제되었습니다\n", id);
+				} else {
+					System.out.println("해당 명령어는 존재하지 않습니다.");
 				}
 
 			}
