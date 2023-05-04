@@ -34,47 +34,88 @@ public class App {
 					break;
 				}
 
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				if (cmd.equals("member join")) {
 
-					System.out.println("== 게시물 작성 ==");
-					String LoginId = "";
-					String LoginPw = "";
-					String name = "";
-					
+					String LoginId = null;
+					String LoginPw = null;
+					String name = null;
+					String LoginPw2 = null;
+					SecSql sql = null;
+
+					System.out.println("== 회원 가입 시작 ==");
 					while (true) {
 						System.out.printf("LoginId : ");
 						LoginId = sc.nextLine().trim();
 
-						if (LoginId == "") {
+						if (LoginId.length() == 0) {
+							System.out.println("아이디를 입력해주세요");
 							continue;
 						}
+
+						sql = new SecSql();
+						sql.append("SELECT COUNT(*) > 0");
+						sql.append("FROM `member`");
+						sql.append("WHERE loginId = ?", LoginId);
+
+						boolean isLoginIdDup = DBUtil.selectRowBooleanValue(conn, sql);
+
+						if (isLoginIdDup) {
+							System.out.printf("%s(은)는 이미 사용중인 아이디입니다. \n", LoginId);
+							continue;
+						}
+
+						System.out.printf("%s(은)는 이미 사용가능한 아이디입니다. \n", LoginId);
 						break;
 					}
 
 					while (true) {
 						System.out.printf("LoginPw : ");
 						LoginPw = sc.nextLine().trim();
-						System.out.printf("LoginPw2 : ");
-						String LoginPw2 = sc.nextLine().trim();
 
-						if (LoginPw.equals(LoginPw2)) {
+						if (LoginPw.length() == 0) {
+							System.out.println("비밀번호를 입력해주세요.");
+							continue;
+						}
+
+						while (true) {
+							System.out.printf("LoginPw2 : ");
+							LoginPw2 = sc.nextLine().trim();
+
+							if (LoginPw2.length() == 0) {
+								System.out.println("확인 비밀번호를 입력해주세요.");
+								continue;
+							}
+							if (LoginPw.equals(LoginPw2) == false) {
+								System.out.println("비밀번호를 확인해주시기 바랍니다.");
+								continue;
+							}
 							break;
 						}
-						System.out.println("비밀번호를 확인해주시기 바랍니다.");
-						continue;
+						break;
+
 					}
 
 					while (true) {
 						System.out.printf("name : ");
 						name = sc.nextLine().trim();
 
-						if (name == "") {
+						if (name.length() == 0) {
 							continue;
 						}
 						break;
 					}
 
-					SecSql sql = new SecSql();
+					sql = new SecSql();
 					sql.append("INSERT INTO member");
 					sql.append("SET regDate = NOW()");
 					sql.append(", updateDate = NOW()");
