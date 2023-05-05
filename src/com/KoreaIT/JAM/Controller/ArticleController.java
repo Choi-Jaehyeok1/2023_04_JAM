@@ -1,9 +1,7 @@
 package com.KoreaIT.JAM.Controller;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import com.KoreaIT.JAM.Article;
@@ -61,7 +59,7 @@ public class ArticleController {
 
 		if (article == null) {
 			System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
-			continue;
+			return;
 		}
 
 		System.out.printf("== %d번 게시글 상세보기  ==\n", id);

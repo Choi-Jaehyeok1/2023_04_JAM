@@ -4,14 +4,13 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import com.KoreaIT.JAM.Article;
 import com.KoreaIT.JAM.util.DBUtil;
 import com.KoreaIT.JAM.util.SecSql;
 
 public class ArticleDao {
 
 	private Connection conn;
-	
+
 	public ArticleDao(Connection conn) {
 		this.conn = conn;
 	}
@@ -38,36 +37,22 @@ public class ArticleDao {
 		return DBUtil.selectRows(conn, sql);
 	}
 
-	public void getArticle(int id) {
-		
+	public Map<String, Object> getArticle(int id) {
+
 		SecSql sql = new SecSql();
 		sql.append("SELECT *");
 		sql.append("FROM article");
 		sql.append("WHERE id = ?", id);
-		
-		
-		DBUtil.selectRow(conn, sql);
 
-		
+		return DBUtil.selectRow(conn, sql);
 	}
 
 	public void doModify() {
-		
+
 	}
 
 	public void doDelete() {
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

@@ -7,7 +7,6 @@ import java.util.Map;
 
 import com.KoreaIT.JAM.Article;
 import com.KoreaIT.JAM.Dao.ArticleDao;
-import com.KoreaIT.JAM.util.DBUtil;
 
 public class ArticleService {
 
@@ -33,11 +32,16 @@ public class ArticleService {
 		return articles;
 	}
 
-	public void getArticle(int id) {
+	public Article getArticle(int id) {
 
 		Map<String, Object> articleMap = articleDao.getArticle(id);
 		new Article(articleMap);
 		
+		if (articleMap.isEmpty()) {
+			return null;
+		}
+		
+		return new Article(articleMap);
 		
 	}
 
