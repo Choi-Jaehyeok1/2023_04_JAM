@@ -47,6 +47,15 @@ public class ArticleDao {
 		return DBUtil.selectRow(conn, sql);
 	}
 
+	public int getArticleCount(int id) {
+
+		SecSql sql = SecSql.from("SELECT COUNT(*)");
+		sql.append("FROM article");
+		sql.append("WHERE id = ?", id);
+
+		return DBUtil.selectRowIntValue(conn, sql);
+	}
+
 	public void doModify(String title, String body, int id) {
 
 		SecSql sql = new SecSql();

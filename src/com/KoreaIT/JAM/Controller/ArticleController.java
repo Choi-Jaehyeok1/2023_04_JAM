@@ -52,7 +52,6 @@ public class ArticleController {
 	public void showDetail(String cmd) {
 
 		int id = Integer.parseInt(cmd.split(" ")[2]);
-
 		Article article = articleService.getArticle(id);
 
 		if (article == null) {
@@ -73,9 +72,9 @@ public class ArticleController {
 
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
-		Article article = articleService.getArticle(id);
+		int articleCount = articleService.getArticleCount(id);
 
-		if (article == null) {
+		if (articleCount == 0) {
 			System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
 			return;
 		}
@@ -95,12 +94,13 @@ public class ArticleController {
 
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
-		Article article = articleService.getArticle(id);
+		int articleCount = articleService.getArticleCount(id);
 
-		if (article == null) {
+		if (articleCount == 0) {
 			System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
 			return;
 		}
+		
 		articleService.doDelete(id);
 
 		System.out.printf("%d번 게시글이 삭제되었습니다\n", id);

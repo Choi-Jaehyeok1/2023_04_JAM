@@ -45,6 +45,10 @@ public class ArticleService {
 
 	}
 
+	public int getArticleCount(int id) {
+		return articleDao.getArticleCount(id);
+	}
+
 	public void doModify(String title, String body, int id) {
 		articleDao.doModify(title, body, id);
 

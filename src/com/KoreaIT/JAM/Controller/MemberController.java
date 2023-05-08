@@ -38,7 +38,7 @@ public class MemberController {
 				continue;
 			}
 
-			System.out.printf("%s(은)는 이미 사용가능한 아이디입니다. \n", LoginId);
+			System.out.printf("%s(은)는 사용가능한 아이디입니다. \n", LoginId);
 			break;
 		}
 
