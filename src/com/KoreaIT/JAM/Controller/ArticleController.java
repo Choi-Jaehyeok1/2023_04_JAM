@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.KoreaIT.JAM.Article;
 import com.KoreaIT.JAM.Service.ArticleService;
+import com.KoreaIT.JAM.session.Session;
 
 public class ArticleController {
 
@@ -18,7 +19,12 @@ public class ArticleController {
 	}
 
 	public void doWrite() {
-
+		
+		if (Session.loginedMemberId == -1) {
+			System.out.println("로그인 중이 아닙니다.");
+			return;
+		}
+		
 		System.out.println("== 게시물 작성 ==");
 
 		System.out.printf("제목 : ");
@@ -69,7 +75,12 @@ public class ArticleController {
 	}
 
 	public void doModify(String cmd) {
-
+		
+		if (Session.loginedMemberId == -1) {
+			System.out.println("로그인 중이 아닙니다.");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
 		int articleCount = articleService.getArticleCount(id);
@@ -91,7 +102,12 @@ public class ArticleController {
 	}
 
 	public void doDelete(String cmd) {
-
+		
+		if (Session.loginedMemberId == -1) {
+			System.out.println("로그인 중이 아닙니다.");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
 		int articleCount = articleService.getArticleCount(id);
