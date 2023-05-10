@@ -20,12 +20,12 @@ public class ArticleController {
 	}
 
 	public void doWrite() {
-		
+
 		if (Session.islogined() == false) {
 			System.out.println("로그인 중이 아닙니다.");
 			return;
 		}
-		
+
 		System.out.println("== 게시물 작성 ==");
 
 		System.out.printf("제목 : ");
@@ -48,10 +48,11 @@ public class ArticleController {
 			return;
 		}
 		System.out.println("== 게시물 리스트 ==");
-		System.out.println("번 호	|	제 목	|	날  짜	|	작성자	");
+		System.out.println("번 호	|	제 목	|	작성자	|	날  짜	");
 
 		for (Article article : articles) {
-			System.out.printf("%d	|	%s	|	%s	|	%d\n", article.id, article.title, Util.datetimeFormat(article.regDate), article.loginedId);
+			System.out.printf("%d	|	%s	|	%s	|	%s\n", article.id, article.title, article.writerName,
+					Util.datetimeFormat(article.regDate));
 		}
 
 	}
@@ -70,25 +71,30 @@ public class ArticleController {
 		System.out.printf("번	 호 : %d\n", article.id);
 		System.out.printf("작성날짜 : %s\n", Util.datetimeFormat(article.regDate));
 		System.out.printf("수정날짜 : %s\n", Util.datetimeFormat(article.updateDate));
+		System.out.printf("작 성 자 : %s\n", article.writerName);
 		System.out.printf("제	 목 : %s\n", article.title);
 		System.out.printf("내	 용 : %s\n", article.body);
-		System.out.printf("작 성 자 : %d\n", article.loginedId);
 
 	}
 
 	public void doModify(String cmd) {
-		
+
 		if (Session.islogined() == false) {
 			System.out.println("로그인 중이 아닙니다.");
 			return;
 		}
-		
+
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
-		int articleCount = articleService.getArticleCount(id);
+		Article article = articleService.getArticle(id);
 
-		if (articleCount == 0) {
+		if (article == null) {
 			System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
+			return;
+		}
+
+		if (Session.loginedMemberId != article.loginedId) {
+			System.out.printf("%d번 게시글 수정 권한이 없습니다.\n", id);
 			return;
 		}
 
@@ -104,21 +110,25 @@ public class ArticleController {
 	}
 
 	public void doDelete(String cmd) {
-		
+
 		if (Session.islogined() == false) {
 			System.out.println("로그인 중이 아닙니다.");
 			return;
 		}
-		
+
 		int id = Integer.parseInt(cmd.split(" ")[2]);
 
-		int articleCount = articleService.getArticleCount(id);
+		Article article = articleService.getArticle(id);
 
-		if (articleCount == 0) {
+		if (article == null) {
 			System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
 			return;
 		}
-		
+		if (Session.loginedMemberId != article.loginedId) {
+			System.out.printf("%d번 게시글 삭제 권한이 없습니다.\n", id);
+			return;
+		}
+
 		articleService.doDelete(id);
 
 		System.out.printf("%d번 게시글이 삭제되었습니다\n", id);

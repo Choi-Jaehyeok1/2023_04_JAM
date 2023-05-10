@@ -103,7 +103,7 @@ public class MemberController {
 			return;
 		}
 
-		System.out.printf("=== Login ===");
+		System.out.printf("=== Login ===\n");
 		Member member = null;
 		while (true) {
 			System.out.printf("LoginId : ");
@@ -138,7 +138,7 @@ public class MemberController {
 
 		Session.login(member.id);
 
-		System.out.printf("%s 님 환영합니다.", member.loginId);
+		System.out.printf("%s 님 환영합니다.\n", member.loginId);
 	}
 
 	public void dologout() {

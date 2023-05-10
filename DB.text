@@ -12,6 +12,8 @@ CREATE TABLE article(
     `body` TEXT NOT NULL
 );
 
+
+
 DESC article;
 
 INSERT INTO article
@@ -53,10 +55,39 @@ CREATE TABLE `member`(
     `name` VARCHAR(20) NOT NULL
 );
 
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test1',
+loginPw = 'test1',
+`name` = 'test1';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test2',
+loginPw = 'test2',
+`name` = 'test2';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test3',
+loginPw = 'test3',
+`name` = 'test3';
+
+
+
 DESC `member`;
 
 ALTER TABLE `member` MODIFY COLUMN loginId VARCHAR(20) NOT NULL UNIQUE;
 
+
+SELECT A.*, M.name AS writerName
+FROM article AS A
+INNER JOIN `member` AS M
+ON A.loginedId = M.id
+ORDER BY A.id DESC;
 
 
 

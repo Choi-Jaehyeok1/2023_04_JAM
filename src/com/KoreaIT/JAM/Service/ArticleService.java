@@ -35,7 +35,6 @@ public class ArticleService {
 	public Article getArticle(int id) {
 
 		Map<String, Object> articleMap = articleDao.getArticle(id);
-		new Article(articleMap);
 
 		if (articleMap.isEmpty()) {
 			return null;
@@ -45,11 +44,8 @@ public class ArticleService {
 
 	}
 
-	public int getArticleCount(int id) {
-		return articleDao.getArticleCount(id);
-	}
-
 	public void doModify(String title, String body, int id) {
+		
 		articleDao.doModify(title, body, id);
 
 	}

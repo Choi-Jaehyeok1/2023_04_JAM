@@ -7,17 +7,19 @@ public class Article {
 	public int id;
 	public LocalDateTime regDate;
 	public LocalDateTime updateDate;
+	public int loginedId;
 	public String title;
 	public String body;
-	public int loginedId;
+	public String writerName;
 	
 	public Article(Map<String, Object> articleMap) {
 		this.id = (int) articleMap.get("id");
 		this.regDate = (LocalDateTime) articleMap.get("regDate");
 		this.updateDate = (LocalDateTime) articleMap.get("updateDate");
+		this.loginedId = (int) articleMap.get("loginedId");
 		this.title = (String) articleMap.get("title");
 		this.body = (String) articleMap.get("body");
-		this.loginedId = (int) articleMap.get("loginedId");
+		this.writerName = (String) articleMap.get("writerName");
 	}
 
 	@Override
