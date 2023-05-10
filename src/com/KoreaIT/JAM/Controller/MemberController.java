@@ -25,12 +25,12 @@ public class MemberController {
 		String LoginPw2 = null;
 
 		while (true) {
-			
-			if (Session.loginedMemberId != -1) {
+
+			if (Session.islogined() == true) {
 				System.out.println("이미 로그인 된 상태입니다.");
 				return;
 			}
-			
+
 			System.out.printf("LoginId : ");
 			LoginId = sc.nextLine().trim();
 
@@ -97,12 +97,12 @@ public class MemberController {
 	}
 
 	public void dologin() {
-		
-		if (Session.loginedMemberId != -1) {
+
+		if (Session.islogined() == true) {
 			System.out.println("이미 로그인 된 상태입니다.");
 			return;
 		}
-		
+
 		System.out.printf("=== Login ===");
 		Member member = null;
 		while (true) {
@@ -136,19 +136,19 @@ public class MemberController {
 			break;
 		}
 
-		Session.loginedMemberId = member.id;
+		Session.login(member.id);
+
 		System.out.printf("%s 님 환영합니다.", member.loginId);
 	}
 
 	public void dologout() {
-		
-		if (Session.loginedMemberId == -1) {
+
+		if (Session.islogined() == false) {
 			System.out.println("로그인 중이 아닙니다.");
 			return;
-		} else {
-			Session.loginedMemberId = -1;
-			System.out.println("로그아웃 되었습니다.");
 		}
 
+		Session.logout();
+		System.out.println("로그아웃 되었습니다.");
 	}
 }

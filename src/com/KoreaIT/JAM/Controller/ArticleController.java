@@ -7,6 +7,7 @@ import java.util.Scanner;
 import com.KoreaIT.JAM.Article;
 import com.KoreaIT.JAM.Service.ArticleService;
 import com.KoreaIT.JAM.session.Session;
+import com.KoreaIT.JAM.util.Util;
 
 public class ArticleController {
 
@@ -20,7 +21,7 @@ public class ArticleController {
 
 	public void doWrite() {
 		
-		if (Session.loginedMemberId == -1) {
+		if (Session.islogined() == false) {
 			System.out.println("로그인 중이 아닙니다.");
 			return;
 		}
@@ -32,7 +33,7 @@ public class ArticleController {
 		System.out.printf("내용 : ");
 		String body = sc.nextLine();
 
-		int id = articleService.doWrite(title, body);
+		int id = articleService.doWrite(title, body, Session.loginedMemberId);
 
 		System.out.printf("%d번 게시글이 생성되었습니다\n", id);
 
@@ -47,10 +48,10 @@ public class ArticleController {
 			return;
 		}
 		System.out.println("== 게시물 리스트 ==");
-		System.out.println("번호	|	제목");
+		System.out.println("번 호	|	제 목	|	날  짜	|	작성자	");
 
 		for (Article article : articles) {
-			System.out.printf("%d	|	%s\n", article.id, article.title);
+			System.out.printf("%d	|	%s	|	%s	|	%d\n", article.id, article.title, Util.datetimeFormat(article.regDate), article.loginedId);
 		}
 
 	}
@@ -67,16 +68,17 @@ public class ArticleController {
 
 		System.out.printf("== %d번 게시글 상세보기  ==\n", id);
 		System.out.printf("번	 호 : %d\n", article.id);
-		System.out.printf("작성날짜 : %s\n", article.regDate);
-		System.out.printf("수정날짜 : %s\n", article.updateDate);
+		System.out.printf("작성날짜 : %s\n", Util.datetimeFormat(article.regDate));
+		System.out.printf("수정날짜 : %s\n", Util.datetimeFormat(article.updateDate));
 		System.out.printf("제	 목 : %s\n", article.title);
 		System.out.printf("내	 용 : %s\n", article.body);
+		System.out.printf("작 성 자 : %d\n", article.loginedId);
 
 	}
 
 	public void doModify(String cmd) {
 		
-		if (Session.loginedMemberId == -1) {
+		if (Session.islogined() == false) {
 			System.out.println("로그인 중이 아닙니다.");
 			return;
 		}
@@ -103,7 +105,7 @@ public class ArticleController {
 
 	public void doDelete(String cmd) {
 		
-		if (Session.loginedMemberId == -1) {
+		if (Session.islogined() == false) {
 			System.out.println("로그인 중이 아닙니다.");
 			return;
 		}

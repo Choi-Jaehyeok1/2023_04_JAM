@@ -2,10 +2,12 @@ DROP DATABASE IF EXISTS jdbc_article_manager;
 CREATE DATABASE jdbc_article_manager;
 USE jdbc_article_manager;
 
+
 CREATE TABLE article(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
+    loginedId INT UNSIGNED NOT NULL,
     title VARCHAR(100) NOT NULL,
     `body` TEXT NOT NULL
 );
@@ -15,18 +17,22 @@ DESC article;
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+loginedId = 1,
 title = '제목1',
 `body` = '내용1';
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+loginedId = 1,
 title = '제목2',
 `body` = '내용2';
+
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
+loginedId = 1,
 title = '제목3',
 `body` = '내용3';
 
@@ -42,8 +48,8 @@ CREATE TABLE `member`(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    loginId VARCHAR(20) NOT NULL, //50으로 바꿔야 함 전부
-    loginPw VARCHAR(20) NOT NULL,
+    loginId VARCHAR(50) NOT NULL, 
+    loginPw VARCHAR(50) NOT NULL,
     `name` VARCHAR(20) NOT NULL
 );
 
