@@ -40,6 +40,8 @@ public class ArticleController {
 	}
 
 	public void showList() {
+		
+//		String searchKeyword = cmd.substring("article list".length()).
 
 		List<Article> articles = articleService.getArticles();
 
@@ -48,11 +50,10 @@ public class ArticleController {
 			return;
 		}
 		System.out.println("== 게시물 리스트 ==");
-		System.out.println("번 호	|	제 목	|	작성자	|	날  짜	");
+		System.out.println("번 호	|	제 목	|	작성자	|	조회수	|	날  짜	");
 
 		for (Article article : articles) {
-			System.out.printf("%d	|	%s	|	%s	|	%s\n", article.id, article.title, article.writerName,
-					Util.datetimeFormat(article.regDate));
+			System.out.printf("%d	|	%s	|	%s	|	%d	|	%s\n", article.id, article.title, article.writerName, article.views, Util.datetimeFormat(article.regDate));
 		}
 
 	}
@@ -74,6 +75,7 @@ public class ArticleController {
 		System.out.printf("작 성 자 : %s\n", article.writerName);
 		System.out.printf("제	 목 : %s\n", article.title);
 		System.out.printf("내	 용 : %s\n", article.body);
+		System.out.printf("조 회 수 : %d\n", article.views);
 
 	}
 

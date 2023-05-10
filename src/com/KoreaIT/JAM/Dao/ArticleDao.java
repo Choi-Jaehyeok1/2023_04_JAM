@@ -23,6 +23,7 @@ public class ArticleDao {
 		sql.append(", loginedId = ?", loginedId);
 		sql.append(", title = ?", title);
 		sql.append(", `body` = ?", body);
+		sql.append(", views = ?", 0);
 
 		return DBUtil.insert(conn, sql);
 	}
@@ -43,6 +44,12 @@ public class ArticleDao {
 	public Map<String, Object> getArticle(int id) {
 
 		SecSql sql = new SecSql();
+		sql.append("UPDATE article");
+		sql.append("SET views =  views + 1");
+		sql.append("WHERE id = ?", id);
+		DBUtil.update(conn, sql);
+		
+		sql = new SecSql();
 		sql.append("SELECT A.*, M.name AS writerName");
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");

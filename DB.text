@@ -2,33 +2,31 @@ DROP DATABASE IF EXISTS jdbc_article_manager;
 CREATE DATABASE jdbc_article_manager;
 USE jdbc_article_manager;
 
-
 CREATE TABLE article(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
     loginedId INT UNSIGNED NOT NULL,
     title VARCHAR(100) NOT NULL,
-    `body` TEXT NOT NULL
+    `body` TEXT NOT NULL,
+    views INT UNSIGNED NOT NULL DEFAULT 0
 );
-
-
-
-DESC article;
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 loginedId = 1,
 title = '제목1',
-`body` = '내용1';
+`body` = '내용1',
+views = 1;
 
 INSERT INTO article
 SET regDate = NOW(),
 updateDate = NOW(),
 loginedId = 1,
 title = '제목2',
-`body` = '내용2';
+`body` = '내용2',
+views = 5;
 
 
 INSERT INTO article
@@ -36,15 +34,9 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginedId = 1,
 title = '제목3',
-`body` = '내용3';
+`body` = '내용3',
+views = 3;
 
-INSERT INTO article
-SET regDate = NOW(),
-updateDate = NOW(),
-title = CONCAT('제목', RAND()),
-`body` = CONCAT('제목', RAND());
-
-SELECT * FROM `member`
 
 CREATE TABLE `member`(
     id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -78,11 +70,6 @@ loginPw = 'test3',
 
 
 
-DESC `member`;
-
-ALTER TABLE `member` MODIFY COLUMN loginId VARCHAR(20) NOT NULL UNIQUE;
-
-
 SELECT A.*, M.name AS writerName
 FROM article AS A
 INNER JOIN `member` AS M
@@ -90,4 +77,5 @@ ON A.loginedId = M.id
 ORDER BY A.id DESC;
 
 
+SELECT * FROM article
 
