@@ -28,7 +28,7 @@ public class ArticleDao {
 		return DBUtil.insert(conn, sql);
 	}
 
-	public List<Map<String, Object>> getArticles() {
+	public List<Map<String, Object>> getArticles(String searchKeyword) {
 
 		SecSql sql = new SecSql();
 
@@ -36,6 +36,9 @@ public class ArticleDao {
 		sql.append("FROM article AS A");
 		sql.append("INNER JOIN `member` AS M");
 		sql.append("On A.loginedId = M.id");
+		if (searchKeyword.length() > 0) {
+			sql.append("WHERE title like CONCAT('%', ?, '%')", searchKeyword);
+		}
 		sql.append("ORDER BY a.id DESC");
 
 		return DBUtil.selectRows(conn, sql);

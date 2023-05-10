@@ -39,11 +39,11 @@ public class ArticleController {
 
 	}
 
-	public void showList() {
+	public void showList(String cmd) {
 		
-//		String searchKeyword = cmd.substring("article list".length()).
+		String searchKeyword = cmd.substring("article list".length()).trim();
 
-		List<Article> articles = articleService.getArticles();
+		List<Article> articles = articleService.getArticles(searchKeyword);
 
 		if (articles.size() == 0) {
 			System.out.println("존재하는 게시물이 없습니다");

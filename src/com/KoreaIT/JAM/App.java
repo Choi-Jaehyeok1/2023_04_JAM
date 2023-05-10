@@ -43,7 +43,7 @@ public class App {
 				} else if (cmd.equals("article write")) {
 					articleController.doWrite();
 				} else if (cmd.startsWith("article list ")) {
-					articleController.showList();
+					articleController.showList(cmd);
 				} else if (cmd.startsWith("article detail ")) {
 					articleController.showDetail(cmd);
 				} else if (cmd.startsWith("article modify ")) {

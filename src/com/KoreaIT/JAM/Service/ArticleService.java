@@ -21,8 +21,8 @@ public class ArticleService {
 
 	}
 
-	public List<Article> getArticles() {
-		List<Map<String, Object>> articleListMap = articleDao.getArticles();
+	public List<Article> getArticles(String searchKeyword) {
+		List<Map<String, Object>> articleListMap = articleDao.getArticles(searchKeyword);
 
 		List<Article> articles = new ArrayList<>();
 
